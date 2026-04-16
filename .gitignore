@@ -1,0 +1,77 @@
+
+
+**pycache**/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+
+build/
+dist/
+*.egg-info/
+
+
+
+venv/
+.env/
+.venv/
+env/
+
+
+
+# data/raw/
+# data/processed/
+# data/splits/
+
+# Large files
+
+*.zip
+*.tar
+*.gz
+*.h5
+#*.pth
+*.pt
+*.ckpt
+
+# (Optional) If you want to KEEP best model, comment above and use:
+
+!models/best_model.pth
+
+
+
+.ipynb_checkpoints/
+
+
+
+.DS_Store
+Thumbs.db
+
+
+logs/
+*.log
+tmp/
+temp/
+
+
+
+.vscode/
+.idea/
+
+
+.env
+.env.local
+
+
+
+#*.png
+*.jpg
+*.jpeg
+*.svg
+
+
+!reports/figures/*.png
+
+
+
+*.bak
+*.swp
