@@ -8,18 +8,13 @@ import os
 
 # Add project root to path so we can import from src/models/
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
-from src.models.cnn import GestureCNN  # adjust to your model filename
+from src.models.cnn import HandGestureCNN
+from src.utils.config import BEST_MODEL_PATH, IMG_SIZE, NUM_CLASSES, DEVICE
 
-# --- Config ---
-MODEL_PATH = "models/bestmodel.pth"
-IMG_SIZE   = 64
+# Class names — sorted alphabetically to match ImageFolder ordering
+CLASS_NAMES = sorted([str(i) for i in range(NUM_CLASSES)])
 
-CLASS_NAMES = [
-    "01_palm", "02_l", "03_fist", "04_fist_moved", "05_thumb",
-    "06_index", "07_ok", "08_palm_moved", "09_c", "10_down"
-]  # adjust to match your actual folder names
-
-# --- Transform (must match what you used during training) ---
+# Transform (matches training)
 transform = transforms.Compose([
     transforms.Resize((IMG_SIZE, IMG_SIZE)),
     transforms.Grayscale(),
@@ -29,9 +24,9 @@ transform = transforms.Compose([
 
 def predict(image_path):
     # Load model
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = GestureCNN(num_classes=len(CLASS_NAMES))
-    model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
+    device = torch.device(DEVICE)
+    model = HandGestureCNN()
+    model.load_state_dict(torch.load(BEST_MODEL_PATH, map_location=device, weights_only=True))
     model.eval()
     model.to(device)
 
