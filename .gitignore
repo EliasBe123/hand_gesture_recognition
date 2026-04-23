@@ -19,9 +19,9 @@ env/
 
 
 
-# data/raw/
-# data/processed/
-# data/splits/
+data/raw/
+data/processed/
+data/splits/
 
 # Large files
 
