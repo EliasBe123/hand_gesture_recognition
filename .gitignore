@@ -30,13 +30,13 @@ data/hgr/
 *.tar
 *.gz
 *.h5
-#*.pth
+*.pth
 *.pt
 *.ckpt
 
 # (Optional) If you want to KEEP best model, comment above and use:
 
-!models/best_model.pth
+#!models/best_model.pth
 
 
 
