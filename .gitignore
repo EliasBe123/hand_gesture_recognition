@@ -77,3 +77,6 @@ temp/
 *.bak
 *.swp
 models/*.pth
+data/*.png
+data/*.png
+models/*.pth
