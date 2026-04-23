@@ -5,9 +5,9 @@ import torch.nn as nn
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
-from src.utils.config_case2 import DEVICE, EPOCHS, LEARNING_RATE, BEST_MODEL_PATH_CASE2
-from src.data.loader_case2 import get_dataloaders
-from src.models.cnn_case2 import HandGestureCNN_Case2
+from src.utils.config_case2v2 import DEVICE, EPOCHS, LEARNING_RATE, BEST_MODEL_PATH_CASE2
+from src.data.loader_case2v2 import get_dataloaders
+from src.models.cnn_case2v2 import HandGestureCNN_Case2
 
 
 def train_one_epoch(model, loader, criterion, optimizer, device):
