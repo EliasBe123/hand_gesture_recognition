@@ -70,7 +70,13 @@ class PairedGestureDataset(Dataset):
 
 def get_dataloaders():
     full_dataset = PairedGestureDataset(HGR_TRAIN_DIR, transform=get_transforms(train=True))
-    test_dataset = PairedGestureDataset(HGR_TEST_DIR, transform=get_transforms(train=False))
+    
+    # Use same class mapping as train set so indices are consistent
+    test_dataset = SingleGestureDataset(
+        HGR_TEST_DIR,
+        transform=get_transforms(train=False),
+        class_to_idx=full_dataset.class_to_idx
+    )
 
     val_size = int(len(full_dataset) * VAL_SPLIT)
     train_size = len(full_dataset) - val_size
@@ -85,5 +91,30 @@ def get_dataloaders():
 
     print(f"Classes: {full_dataset.classes}")
     print(f"Pairs — Train: {train_size}, Val: {val_size}, Test: {len(test_dataset)}")
-
     return train_loader, val_loader, test_loader
+
+class SingleGestureDataset(Dataset):
+    """Loads single images for test set (no pairing)."""
+    def __init__(self, root_dir, transform=None, class_to_idx=None):
+        self.transform = transform
+        self.samples = []
+        self.classes = sorted([d for d in os.listdir(root_dir) if os.path.isdir(os.path.join(root_dir, d))])
+        self.class_to_idx = class_to_idx if class_to_idx else {c: i for i, c in enumerate(self.classes)}
+
+        for cls_name in self.classes:
+            cls_dir = os.path.join(root_dir, cls_name)
+            if not os.path.isdir(cls_dir):
+                continue
+            for fname in os.listdir(cls_dir):
+                if fname.endswith(".png") or fname.endswith(".jpg"):
+                    self.samples.append((os.path.join(cls_dir, fname), self.class_to_idx[cls_name]))
+
+    def __len__(self):
+        return len(self.samples)
+
+    def __getitem__(self, idx):
+        path, label = self.samples[idx]
+        img = Image.open(path).convert("RGB")
+        if self.transform:
+            img = self.transform(img)
+        return img, label

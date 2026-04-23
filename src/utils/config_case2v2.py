@@ -18,4 +18,4 @@ VAL_SPLIT = 0.15
 # Training
 LEARNING_RATE = 1e-3
 EPOCHS = 20
-DEVICE = "cpu"  # change to "mps" (macOS 12.3+) or "cuda" if available
+DEVICE = "mps"  # change to "mps" (macOS 12.3+) or "cuda" if available
