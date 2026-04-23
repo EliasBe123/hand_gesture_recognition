@@ -8,8 +8,8 @@ import os
 
 # Add project root to path
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
-from src.models.cnn_case2 import HandGestureCNN_Case2
-from src.utils.config_case2 import BEST_MODEL_PATH_CASE2, IMG_SIZE, NUM_CLASSES, DEVICE
+from src.models.cnn_case2v2 import HandGestureCNN_Case2
+from src.utils.config_case2v2 import BEST_MODEL_PATH_CASE2, IMG_SIZE, NUM_CLASSES, DEVICE
 
 # Class names — matches ImageFolder alphabetical ordering of A, F, L, Y
 CLASS_NAMES = ["A", "F", "L", "Y"]

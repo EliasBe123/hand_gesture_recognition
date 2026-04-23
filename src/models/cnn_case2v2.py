@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from src.utils.config_case2 import NUM_CLASSES, NUM_CHANNELS
+from src.utils.config_case2v2 import NUM_CLASSES, NUM_CHANNELS
 
 
 class CNNFeatureExtractor(nn.Module):

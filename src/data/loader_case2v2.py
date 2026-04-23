@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader, Dataset, random_split
 from torchvision import transforms
 from PIL import Image
 
-from src.utils.config_case2 import HGR_TRAIN_DIR, HGR_TEST_DIR, IMG_SIZE, BATCH_SIZE, VAL_SPLIT
+from src.utils.config_case2v2 import HGR_TRAIN_DIR, HGR_TEST_DIR, IMG_SIZE, BATCH_SIZE, VAL_SPLIT
 
 
 def get_transforms(train=True):
