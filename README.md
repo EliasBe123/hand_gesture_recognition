@@ -4,14 +4,23 @@ CNN-based hand gesture recognition with two dataset options.
 
 ## Setup
 
+For macOS/Linux:
 ```bash
 git clone https://github.com/EliasBe123/hand_gesture_recognition.git
 cd hand_gesture_recognition
 python -m venv .venv
 source .venv/bin/activate
-pip install torch torchvision kagglehub numpy<2 pillow matplotlib
+pip install torch torchvision kagglehub "numpy<2" pillow matplotlib
 ```
 
+For Windows:
+```bash
+git clone https://github.com/EliasBe123/hand_gesture_recognition.git
+cd hand_gesture_recognition
+python -m venv .venv
+.venv\Scripts\activate
+pip install torch torchvision kagglehub "numpy<2" pillow matplotlib
+```
 ## Datasets
 
 ### Case 1 — 20-class grayscale gestures (50×50)
