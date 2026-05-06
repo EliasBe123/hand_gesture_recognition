@@ -10,7 +10,7 @@ git clone https://github.com/EliasBe123/hand_gesture_recognition.git
 cd hand_gesture_recognition
 python -m venv .venv
 source .venv/bin/activate
-pip install torch torchvision kagglehub "numpy<2" pillow matplotlib
+pip install torch torchvision kagglehub "numpy<2" pillow matplotlib mediapipe
 ```
 
 For Windows:
@@ -19,7 +19,7 @@ git clone https://github.com/EliasBe123/hand_gesture_recognition.git
 cd hand_gesture_recognition
 python -m venv .venv
 .venv\Scripts\activate
-pip install torch torchvision kagglehub "numpy<2" pillow matplotlib
+pip install torch torchvision kagglehub "numpy<2" pillow matplotlib mediapipe
 ```
 ## Datasets
 
@@ -54,6 +54,14 @@ Train:
 ```bash
 python -m src.training.train_case2v2
 ```
+
+
+## Trained models on Kaggle
+Stored on natberakprojekt@gmail.com
+
+Simply download which model you want to use and add it to '/models'
+
+
 
 ## Inference
 
