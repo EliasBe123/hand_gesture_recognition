@@ -71,15 +71,25 @@ python -m src.inference.predict path/to/image.jpg
 ```
 
 
-FIXME:
+## Evaluation
+# Single images
 python -m src.inference.predict_case2v2 data/hgr/multi_user_test/A/image0.png
 
 
+# Cases
 Evaluate case 1:
-python -m src.inference.evaluate data/raw/test/test
+python -m src.inference.evaluate_case1 data/raw/test/test
 
 Evaluate case 2:
 python -m src.inference.evaluate_case2v2 data/hgr/multi_user_test 2>/dev/null
+
+
+<!-- FIXME:  same eval file for all different cases -->
+# Case 1
+python -m src.inference.evaluate data/raw/test/test --case case1
+
+# Case 2 (pipe stderr to suppress MediaPipe logs)
+python -m src.inference.evaluate data/hgr/multi_user_test --case case2 2>/dev/null
 
 
 ## Project Structure
