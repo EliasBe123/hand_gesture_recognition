@@ -38,6 +38,10 @@ data/hgr/
 
 #!models/best_model.pth
 
+# Model weights, stored on Kaggle, too large for Git
+models/
+
+
 
 
 .ipynb_checkpoints/
