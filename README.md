@@ -10,7 +10,7 @@ git clone https://github.com/EliasBe123/hand_gesture_recognition.git
 cd hand_gesture_recognition
 python -m venv .venv
 source .venv/bin/activate
-pip install torch torchvision kagglehub "numpy<2" pillow matplotlib mediapipe
+pip install torch torchvision kagglehub "numpy<2" pillow matplotlib mediapipe==0.10.14
 ```
 
 For Windows:
@@ -72,11 +72,14 @@ python -m src.inference.predict path/to/image.jpg
 
 
 FIXME:
-python -m src.inference.predict_case2v2 data/hgr/mulit_user_test/A/image0.png
+python -m src.inference.predict_case2v2 data/hgr/multi_user_test/A/image0.png
 
 
 Evaluate case 1:
 python -m src.inference.evaluate data/raw/test/test
+
+Evaluate case 2:
+python -m src.inference.evaluate_case2v2 data/hgr/multi_user_test
 
 ## Project Structure
 
