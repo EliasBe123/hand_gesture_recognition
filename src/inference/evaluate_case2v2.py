@@ -1,7 +1,3 @@
-import os
-os.environ["GLOG_minloglevel"] = "3"
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
-
 import torch
 import torchvision.transforms as transforms
 from PIL import Image
@@ -11,6 +7,7 @@ import os
 import sys
 from pathlib import Path
 from collections import defaultdict
+import time
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from src.models.cnn_case2v2 import HandGestureCNN_Case2
@@ -96,6 +93,19 @@ def evaluate(test_dir):
     test_path = Path(test_dir)
     image_extensions = ["*.jpg", "*.png", "*.jpeg"]
 
+    # Count total images upfront for ETA
+    total_images = 0
+    for class_folder in sorted(test_path.iterdir()):
+        if not class_folder.is_dir():
+            continue
+        if class_folder.name not in CLASS_NAMES:
+            continue
+        for ext in image_extensions:
+            total_images += len(list(class_folder.glob(ext)))
+
+    start_time = time.time()
+    
+    
     for class_folder in sorted(test_path.iterdir()):
         if not class_folder.is_dir():
             continue
@@ -116,9 +126,16 @@ def evaluate(test_dir):
 
             total          += 1
             class_total[true_label] += 1
-
-            if total % 20 == 0:
-                print(f"  Processed {total} images...", end="\r")
+            
+            
+            ## Progress indicator (every 20 images) with ETA
+            # if total % 20 == 0:
+            #     print(f"  Processed {total} images...", end="\r")
+            elapsed = time.time() - start_time
+            rate = total / elapsed if elapsed > 0 else 0
+            remaining = (total_images - total) / rate if rate > 0 else 0
+            mins, secs = divmod(int(remaining), 60)
+            print(f"  {total}/{total_images} images  |  {rate:.1f} img/s  |  ETA: {mins}m {secs}s    ", end="\r")
 
             if not boxes:
                 no_detection += 1
@@ -177,7 +194,17 @@ def evaluate(test_dir):
         c   = class_correct[cls]
         acc = c / n if n > 0 else 0
         print(f"  {cls}:  {c:>4} / {n:<4}  ({acc:.1%})")
-
+    print(f"\n{'='*50}")
+    print(f"PER-CLASS ACCURACY (detected only)")
+    print(f"{'='*50}")
+    for cls in CLASS_NAMES:
+        detected = class_total[cls] - sum(
+            1 for w in wrong
+            if w["true"] == cls and w["reason"] == "mediapipe_no_detection"
+        )
+        c   = class_correct[cls]
+        acc = c / detected if detected > 0 else 0
+        print(f"  {cls}:  {c:>4} / {detected:<4}  ({acc:.1%})")
     print(f"\n{'='*50}")
     print(f"CONFUSION MATRIX  (rows = true, cols = predicted)")
     print(f"{'='*50}")
