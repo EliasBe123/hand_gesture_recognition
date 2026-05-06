@@ -62,6 +62,14 @@ Predict on an image (case 1 model):
 python -m src.inference.predict path/to/image.jpg
 ```
 
+
+FIXME:
+python -m src.inference.predict_case2v2 data/hgr/mulit_user_test/A/image0.png
+
+
+Evaluate case 1:
+python -m src.inference.evaluate data/raw/test/test
+
 ## Project Structure
 
 ```
