@@ -3,8 +3,8 @@ import os
 # Paths
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
-HGR_TRAIN_DIR = os.path.join(DATA_DIR, "hgr", "train")
-HGR_TEST_DIR = os.path.join(DATA_DIR, "hgr", "multi_user_test")
+HGR_TRAIN_DIR = os.path.join(DATA_DIR, "hgr_cropped", "train")
+HGR_TEST_DIR = os.path.join(DATA_DIR, "hgr_cropped", "test")
 MODEL_DIR = os.path.join(PROJECT_ROOT, "models")
 BEST_MODEL_PATH_CASE2 = os.path.join(MODEL_DIR, "bestmodel_case2.pth")
 

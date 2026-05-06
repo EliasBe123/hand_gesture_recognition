@@ -44,8 +44,24 @@ def detect_hands(image_rgb):
                 y_min = max(0, int((min(y_coords) - pad) * h))
                 x_max = min(w, int((max(x_coords) + pad) * w))
                 y_max = min(h, int((max(y_coords) + pad) * h))
+                
+                # Inside detect_hands, after finding x_min, y_min, x_max, y_max
+                width = x_max - x_min
+                height = y_max - y_min
+                max_side = max(width, height)
 
-                hands_result.append((x_min, y_min, x_max, y_max))
+                # Find the center of the box
+                center_x = x_min + width // 2
+                center_y = y_min + height // 2
+
+                # Create a new SQUARE bounding box
+                half_side = int((max_side) / 2) # Added 20% padding so fingers aren't cut off
+                x_min_sq = max(0, center_x - half_side)
+                y_min_sq = max(0, center_y - half_side)
+                x_max_sq = min(w, center_x + half_side)
+                y_max_sq = min(h, center_y + half_side)
+
+                hands_result.append((x_min_sq, y_min_sq, x_max_sq, y_max_sq))
 
     return hands_result
 
@@ -73,6 +89,7 @@ def predict(image_path):
 
     # Detect hands
     boxes = detect_hands(img_np)
+    print(f"Detected {len(boxes)} hand(s)")  # ← add this
     if not boxes:
         print(f"\nNo hands detected in {image_path}")
         plt.imshow(img)
