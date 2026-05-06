@@ -79,7 +79,8 @@ Evaluate case 1:
 python -m src.inference.evaluate data/raw/test/test
 
 Evaluate case 2:
-python -m src.inference.evaluate_case2v2 data/hgr/multi_user_test
+python -m src.inference.evaluate_case2v2 data/hgr/multi_user_test 2>/dev/null
+
 
 ## Project Structure
 
