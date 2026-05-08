@@ -44,14 +44,9 @@ def load_case(case):
         ])
         use_mediapipe = True
 
-    # ── Add case 3 here when ready ──
+    # Future cases here
     # elif case == "case3":
-    #     from src.models.cnn_case3 import HandGestureCNN_Case3
-    #     from src.utils.config_case3 import BEST_MODEL_PATH_CASE3, IMG_SIZE, NUM_CLASSES, DEVICE
-    #     model       = HandGestureCNN_Case3()
-    #     model_path  = BEST_MODEL_PATH_CASE3
-    #     ...
-    #     use_mediapipe = True/False
+   
 
     else:
         print(f"Unknown case '{case}'. Available: case1, case2")
@@ -117,6 +112,7 @@ def classify(model, img, transform, device, class_names):
 def evaluate(test_dir, case):
     model, device, class_names, transform, use_mediapipe = load_case(case)
 
+    
     total        = 0
     correct      = 0
     no_detection = 0
@@ -128,6 +124,7 @@ def evaluate(test_dir, case):
     test_path        = Path(test_dir)
     image_extensions = ["*.jpg", "*.png", "*.jpeg"]
 
+
     # Count total images for ETA
     total_images = 0
     for class_folder in sorted(test_path.iterdir()):
@@ -138,6 +135,8 @@ def evaluate(test_dir, case):
         for ext in image_extensions:
             total_images += len(list(class_folder.glob(ext)))
 
+
+
     print(f"Evaluating {case} on {total_images} images in '{test_dir}'")
     if use_mediapipe:
         print("MediaPipe hand detection: ON")
@@ -146,7 +145,8 @@ def evaluate(test_dir, case):
     print()
 
     start_time = time.time()
-
+    
+    # Walk through every class folder for images
     for class_folder in sorted(test_path.iterdir()):
         if not class_folder.is_dir():
             continue
@@ -160,6 +160,7 @@ def evaluate(test_dir, case):
             images.extend(class_folder.glob(ext))
         images = sorted(images)
 
+        # Loop through each image in the class folder
         for img_path in images:
             img = Image.open(img_path).convert("RGB")
 
@@ -167,12 +168,14 @@ def evaluate(test_dir, case):
             class_total[true_label] += 1
 
             # Progress + ETA
+            # This is for ETA and is updated for every image
             elapsed   = time.time() - start_time
             rate      = total / elapsed if elapsed > 0 else 0
             remaining = (total_images - total) / rate if rate > 0 else 0
             mins, secs = divmod(int(remaining), 60)
             print(f"  {total}/{total_images}  |  {rate:.1f} img/s  |  ETA: {mins}m {secs}s    ", end="\r")
 
+            # Here we try to detect the hand first (if case 2), and if no hand is found, we count it as a "no detection" error.
             if use_mediapipe:
                 img_np = np.array(img)
                 boxes  = detect_hands(img_np)
@@ -193,9 +196,11 @@ def evaluate(test_dir, case):
                 # Case 1: classify the full image directly
                 img_to_classify = img
 
+            # Now we classify the cropped hand (or full image for case 1)
             predicted, confidence = classify(model, img_to_classify, transform, device, class_names)
             confusion[true_label][predicted] += 1
 
+            # Update correct/wrong counts
             if predicted == true_label:
                 correct += 1
                 class_correct[true_label] += 1
@@ -231,12 +236,14 @@ def evaluate(test_dir, case):
     print(f"\n{'='*50}")
     print(f"PER-CLASS ACCURACY (all images)")
     print(f"{'='*50}")
+    # cls = class name, n = total images of that class, c = correct predictions for that class, acc = accuracy for that class
     for cls in class_names:
         n   = class_total[cls]
         c   = class_correct[cls]
         acc = c / n if n > 0 else 0
         print(f"  {cls}:  {c:>4} / {n:<4}  ({acc:.1%})")
 
+    # If using MediaPipe (case 2), also show accuracy for detected images only (excluding no-detection cases), since no-detection is a separate issue from misclassification.
     if use_mediapipe:
         print(f"\n{'='*50}")
         print(f"PER-CLASS ACCURACY (detected only)")
@@ -250,6 +257,7 @@ def evaluate(test_dir, case):
             acc = c / detected if detected > 0 else 0
             print(f"  {cls}:  {c:>4} / {detected:<4}  ({acc:.1%})")
 
+    # Confusion matrix (is a bit wierd to read especially with case 1 since its so wide but very useful otherwise)
     print(f"\n{'='*50}")
     print(f"CONFUSION MATRIX  (rows=true, cols=predicted)")
     print(f"{'='*50}")
@@ -261,9 +269,10 @@ def evaluate(test_dir, case):
             row += f"{confusion[true_cls][pred_cls]:>14}"
         print(row)
 
+
+    # Print mistakes (first 15 misclassifications and first 10 no-detections, good for debugging and understanding common failure cases)
     misclassified = [w for w in wrong if w["reason"] == "misclassification"]
     undetected    = [w for w in wrong if w["reason"] == "mediapipe_no_detection"]
-
     print(f"\n{'='*50}")
     print(f"MISTAKES")
     print(f"{'='*50}")
@@ -278,6 +287,7 @@ def evaluate(test_dir, case):
 
 
 if __name__ == "__main__":
+    # This is the entry point for evaluation, it takes a test directory and a case name as arguments
     import argparse
     parser = argparse.ArgumentParser(description="Evaluate a trained model on a test directory")
     parser.add_argument("test_dir", type=str, help="Path to test directory (subfolders = class names)")
