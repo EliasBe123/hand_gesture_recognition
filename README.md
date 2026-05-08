@@ -10,7 +10,7 @@ git clone https://github.com/EliasBe123/hand_gesture_recognition.git
 cd hand_gesture_recognition
 python -m venv .venv
 source .venv/bin/activate
-pip install torch torchvision kagglehub "numpy<2" pillow matplotlib
+pip install torch torchvision kagglehub "numpy<2" pillow matplotlib mediapipe==0.10.14
 ```
 
 For Windows:
@@ -19,7 +19,7 @@ git clone https://github.com/EliasBe123/hand_gesture_recognition.git
 cd hand_gesture_recognition
 python -m venv .venv
 .venv\Scripts\activate
-pip install torch torchvision kagglehub "numpy<2" pillow matplotlib
+pip install torch torchvision kagglehub "numpy<2" pillow matplotlib mediapipe
 ```
 ## Datasets
 
@@ -55,6 +55,14 @@ Train:
 python -m src.training.train_case2v2
 ```
 
+
+## Trained models on Kaggle
+Stored on natberakprojekt@gmail.com
+
+Simply download which model you want to use and add it to '/models'
+
+
+
 ## Inference
 
 Predict on an image (case 1 model):
@@ -63,12 +71,26 @@ python -m src.inference.predict path/to/image.jpg
 ```
 
 
-FIXME:
-python -m src.inference.predict_case2v2 data/hgr/mulit_user_test/A/image0.png
+## Evaluation
+# Single images
+python -m src.inference.predict_case2v2 data/hgr/multi_user_test/A/image0.png
 
 
+# Cases
 Evaluate case 1:
-python -m src.inference.evaluate data/raw/test/test
+python -m src.inference.evaluate_case1 data/raw/test/test
+
+Evaluate case 2:
+python -m src.inference.evaluate_case2v2 data/hgr/multi_user_test 2>/dev/null
+
+
+<!-- FIXME:  same eval file for all different cases -->
+# Case 1
+python -m src.inference.evaluate data/raw/test/test --case case1
+
+# Case 2 (pipe stderr to suppress MediaPipe logs)
+python -m src.inference.evaluate data/hgr/multi_user_test --case case2 2>/dev/null
+
 
 ## Project Structure
 
