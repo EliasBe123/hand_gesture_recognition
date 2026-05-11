@@ -55,6 +55,10 @@ Train:
 python -m src.training.train_case2v2
 ```
 
+## Preprocess crop
+python -m src.data.preprocess_crop --input data/hgr/train --output data/hgr_cropped/train
+python -m src.data.preprocess_crop --input data/hgr/multi_user_test --output data/hgr_cropped/test
+
 
 ## Trained models on Kaggle
 Stored on natberakprojekt@gmail.com
