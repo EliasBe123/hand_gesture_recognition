@@ -12,15 +12,17 @@ import os
 # Add project root to path
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from src.models.cnn_case2v2 import HandGestureCNN_Case2
-from src.utils.config_case2v2 import FINETUNED_MODEL_PATH_CASE2, IMG_SIZE, NUM_CLASSES, DEVICE
+from src.utils.config_case2v2 import BEST_MODEL_PATH_CASE4, IMG_SIZE, NUM_CLASSES, DEVICE
 
 # Class names — matches ImageFolder alphabetical ordering of A, F, L, Y
 CLASS_NAMES = ["A", "F", "L", "Y"]
 
+# Transform (matches training — RGB, no grayscale)
 transform = transforms.Compose([
     transforms.Grayscale(num_output_channels=3),
     transforms.Resize((IMG_SIZE, IMG_SIZE)),
     transforms.ToTensor(),
+    transforms.Lambda(lambda x: (x > 0.5).float()),  # threshold to pure black/white
     transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
 ])
 
@@ -79,7 +81,7 @@ def classify_crop(model, crop_img, device):
 def predict(image_path):
     device = torch.device(DEVICE)
     model = HandGestureCNN_Case2()
-    model.load_state_dict(torch.load(FINETUNED_MODEL_PATH_CASE2, map_location=device, weights_only=True))
+    model.load_state_dict(torch.load(BEST_MODEL_PATH_CASE4, map_location=device, weights_only=True))
     model.eval()
     model.to(device)
 
@@ -99,7 +101,7 @@ def predict(image_path):
         return
 
     # Plot
-    fig, ax = plt.subplots(1, figsize=(8, 8))
+    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(14, 7))
     ax.imshow(img_np)
 
     for i, (x_min, y_min, x_max, y_max) in enumerate(boxes):
@@ -128,6 +130,14 @@ def predict(image_path):
             color='lime', fontsize=12, fontweight='bold',
             bbox=dict(facecolor='black', alpha=0.6, pad=2)
         )
+        
+        # --- Add black and white crop subplot ---
+        bw_crop = crop.convert("L")  # grayscale
+        bw_array = np.array(bw_crop)
+        bw_binary = (bw_array > 127).astype(np.uint8) * 255  # threshold to pure black/white
+        ax2.imshow(bw_binary, cmap='gray')
+        ax2.set_title(f"B&W crop — {label} ({conf:.0%})")
+        ax2.axis("off")
 
     ax.set_title(f"Hand Gesture Detection — {image_path}")
     ax.axis("off")

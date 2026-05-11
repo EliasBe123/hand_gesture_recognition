@@ -8,6 +8,7 @@ HGR_TEST_DIR = os.path.join(DATA_DIR, "hgr_cropped", "test")
 MODEL_DIR = os.path.join(PROJECT_ROOT, "models")
 BEST_MODEL_PATH_CASE2 = os.path.join(MODEL_DIR, "bestmodel_case2.pth")
 FINETUNED_MODEL_PATH_CASE2 = "models/finetuned_case2v2.pth"
+BEST_MODEL_PATH_CASE4 = "models/bestmodel_case4.pth"
 
 
 # Data
