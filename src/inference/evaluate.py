@@ -58,6 +58,19 @@ def load_case(case):
             transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
         ])
         use_mediapipe = True
+    elif case == "case4":
+        from src.models.cnn_case2v2 import HandGestureCNN_Case2
+        from src.utils.config_case2v2 import BEST_MODEL_PATH_CASE4, IMG_SIZE, NUM_CLASSES, DEVICE
+        model      = HandGestureCNN_Case2()
+        model_path = BEST_MODEL_PATH_CASE4
+        device     = torch.device(DEVICE)
+        class_names = ["A", "F", "L", "Y"]
+        transform  = transforms.Compose([
+            transforms.Resize((IMG_SIZE, IMG_SIZE)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
+        ])
+        use_mediapipe = True
    
 
     else:
