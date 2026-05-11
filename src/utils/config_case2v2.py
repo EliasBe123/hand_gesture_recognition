@@ -7,9 +7,13 @@ HGR_TRAIN_DIR = os.path.join(DATA_DIR, "hgr_cropped", "train")
 HGR_TEST_DIR = os.path.join(DATA_DIR, "hgr_cropped", "test")
 MODEL_DIR = os.path.join(PROJECT_ROOT, "models")
 BEST_MODEL_PATH_CASE2 = os.path.join(MODEL_DIR, "bestmodel_case2.pth")
+<<<<<<< Updated upstream
 FINETUNED_MODEL_PATH_CASE2 = "models/finetuned_case2v2.pth"
 BEST_MODEL_PATH_CASE4 = "models/bestmodel_case4.pth"
 
+=======
+BEST_MODEL_PATH_CASE3 = os.path.join(MODEL_DIR, "bestmodel_case3.pth")
+>>>>>>> Stashed changes
 
 # Data
 IMG_SIZE = 100       # HGR images are 100x100

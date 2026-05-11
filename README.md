@@ -91,6 +91,9 @@ python -m src.inference.evaluate data/raw/test/test --case case1
 # Case 2 (pipe stderr to suppress MediaPipe logs)
 python -m src.inference.evaluate data/hgr/multi_user_test --case case2 2>/dev/null
 
+# Case 3
+python -m src.inference.evaluate data/hgr/multi_user_test --case case3 2>/dev/null
+
 
 ## Project Structure
 
