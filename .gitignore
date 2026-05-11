@@ -21,6 +21,7 @@ env/
 
 data/
 
+!src/data
 # Large files
 
 *.zip
