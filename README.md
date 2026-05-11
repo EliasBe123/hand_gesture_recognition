@@ -99,6 +99,9 @@ python -m src.inference.evaluate data/hgr/multi_user_test --case case2 2>/dev/nu
 python -m src.inference.evaluate data/hgr/multi_user_test --case case3 2>/dev/null
 
 
+
+python3 -m src.inference.gradcam_case2_finetune data/test_F_finger.jpg --class F
+
 ## Project Structure
 
 ```
