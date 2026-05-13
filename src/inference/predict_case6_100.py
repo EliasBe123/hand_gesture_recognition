@@ -137,8 +137,8 @@ def predict(image_path):
     model.eval()
     model.to(device)
 
-    img    = Image.open(image_path).convert("RGB")
-    #img    = Image.open(image_path).convert("RGB").resize((100, 100), Image.LANCZOS)
+    #img    = Image.open(image_path).convert("RGB")
+    img    = Image.open(image_path).convert("RGB").resize((100, 100), Image.LANCZOS)
 
     img_np = np.array(img)
 
