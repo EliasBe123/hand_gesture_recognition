@@ -14,6 +14,7 @@ FINETUNED_MODEL_PATH_CASE2 = os.path.join(MODEL_DIR, "finetuned_case2v2.pth")
 
 BEST_MODEL_PATH_CASE3 = os.path.join(MODEL_DIR, "bestmodel_case3.pth")
 BEST_MODEL_PATH_CASE4 = os.path.join(MODEL_DIR, "bestmodel_case4.pth")
+BEST_MODEL_PATH_CASE6 = os.path.join(MODEL_DIR, "bestmodel_case6.pth")
 
 
 # Data

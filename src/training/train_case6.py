@@ -5,8 +5,8 @@ import torch.nn as nn
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
-from src.utils.config_case2v2 import DEVICE, EPOCHS, LEARNING_RATE, FINETUNED_MODEL_PATH_CASE2, BEST_MODEL_PATH_CASE4
-from src.data.loader_case4_blackwhite import get_dataloaders
+from src.utils.config_case2v2 import DEVICE, EPOCHS, LEARNING_RATE, FINETUNED_MODEL_PATH_CASE2, BEST_MODEL_PATH_CASE6
+from data.loader_case6_blackwhite import get_dataloaders
 from src.models.cnn_case2v2 import HandGestureCNN_Case2
 
 def train_one_epoch(model, loader, criterion, optimizer, device):
@@ -47,6 +47,8 @@ def main():
 
     # 1. Load existing weights before training
     model = HandGestureCNN_Case2().to(device)
+    
+    # FIXME: borde använda Ellens case 4 istället
     model.load_state_dict(torch.load(FINETUNED_MODEL_PATH_CASE2, map_location=device, weights_only=True))
 
     
@@ -69,7 +71,7 @@ def main():
         if val_acc > best_val_acc:
             best_val_acc = val_acc
             # 2. Save to the new path so original is untouched
-            torch.save(model.state_dict(), BEST_MODEL_PATH_CASE4)
+            torch.save(model.state_dict(), BEST_MODEL_PATH_CASE6)
             print(f"  ✓ Saved best model (val_acc={val_acc:.4f})")
 
     print(f"\nTraining complete. Best val accuracy: {best_val_acc:.4f}")
