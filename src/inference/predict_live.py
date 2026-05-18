@@ -26,10 +26,10 @@ from src.utils.config_case2v2 import BEST_MODEL_PATH_CASE6, DEVICE
 
 # ── Colours for each class label (BGR for OpenCV) ────────────────────────────
 LABEL_COLORS = {
-    "A": (255, 220,   0),   # cyan
-    "F": (100, 255,   0),   # green
-    "L": (  0, 180, 255),   # amber
-    "Y": (255,   0, 220),   # magenta
+    "A": (255, 255,   0),   # cyan
+    "F": (0, 255,   0),   # green
+    "L": (  0, 0, 255),   # amber
+    "Y": (255,   0, 255),   # magenta
 }
 
 
@@ -89,26 +89,26 @@ def draw_overlay(frame, boxes, predictions, next_inference_in, fps_setting):
             )
 
     # Countdown progress bar at the bottom
-    interval     = 1.0 / fps_setting
-    elapsed_frac = 1.0 - min(next_inference_in / interval, 1.0)
-    bar_total_w  = w - 20
-    bar_filled   = int(elapsed_frac * bar_total_w)
-    bar_y_pos    = h - 18
-    cv2.rectangle(frame, (10, bar_y_pos), (10 + bar_total_w, bar_y_pos + 10), (50, 50, 50), -1)
-    cv2.rectangle(frame, (10, bar_y_pos), (10 + bar_filled,  bar_y_pos + 10), (0, 200, 80), -1)
-    cv2.putText(
-        frame,
-        f"Next inference in {next_inference_in:.1f}s  |  {fps_setting} FPS  |  Q = quit",
-        (10, bar_y_pos - 5),
-        cv2.FONT_HERSHEY_SIMPLEX, 0.45, (200, 200, 200), 1, cv2.LINE_AA
-    )
+    # interval     = 1.0 / fps_setting
+    # elapsed_frac = 1.0 - min(next_inference_in / interval, 1.0)
+    # bar_total_w  = w - 20
+    # bar_filled   = int(elapsed_frac * bar_total_w)
+    # bar_y_pos    = h - 18
+    # cv2.rectangle(frame, (10, bar_y_pos), (10 + bar_total_w, bar_y_pos + 10), (50, 50, 50), -1)
+    # cv2.rectangle(frame, (10, bar_y_pos), (10 + bar_filled,  bar_y_pos + 10), (0, 200, 80), -1)
+    # cv2.putText(
+    #     frame,
+    #     f"Next inference in {next_inference_in:.1f}s  |  {fps_setting} FPS  |  Q = quit",
+    #     (10, bar_y_pos - 5),
+    #     cv2.FONT_HERSHEY_SIMPLEX, 0.45, (200, 200, 200), 1, cv2.LINE_AA
+    # )
 
     # Model info top-left
-    cv2.putText(
-        frame, "Hand Gesture CNN  |  A  F  L  Y",
-        (10, 22),
-        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (180, 180, 180), 1, cv2.LINE_AA
-    )
+    # cv2.putText(
+    #     frame, "Hand Gesture CNN  |  A  F  L  Y",
+    #     (10, 22),
+    #     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (180, 180, 180), 1, cv2.LINE_AA
+    # )
 
 
 def run_live(fps: float = 1.0, camera_index: int = 0):
