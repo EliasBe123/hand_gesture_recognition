@@ -22,7 +22,7 @@ from predict_case6_100 import (
     CLASS_NAMES,
 )
 from src.models.cnn_case2v2 import HandGestureCNN_Case2
-from src.utils.config_case2v2 import BEST_MODEL_PATH_CASE6, DEVICE
+from src.utils.config_case2v2 import BEST_MODEL_PATH_CASE6, DEVICE, BEST_MODEL_PATH_CASE6_1, BEST_MODEL_PATH_CASE6_2
 
 # ── Colours for each class label (BGR for OpenCV) ────────────────────────────
 LABEL_COLORS = {
@@ -36,7 +36,8 @@ LABEL_COLORS = {
 def load_model(device):
     model = HandGestureCNN_Case2()
     model.load_state_dict(
-        torch.load(BEST_MODEL_PATH_CASE6, map_location=device, weights_only=True)
+        # torch.load(BEST_MODEL_PATH_CASE6, map_location=device, weights_only=True)
+        torch.load(BEST_MODEL_PATH_CASE6_1, map_location=device, weights_only=True)
     )
     model.eval()
     model.to(device)
@@ -156,6 +157,7 @@ def run_live(fps: float = 1.0, camera_index: int = 0):
 
             boxes = detect_hands(small_rgb)      # imported from predict_case6_100
 
+            
             predictions = []
             if boxes:
                 pil_img = Image.fromarray(small_rgb)

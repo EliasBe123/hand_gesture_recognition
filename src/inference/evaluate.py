@@ -84,7 +84,35 @@ def load_case(case):
             transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
         ])
         use_mediapipe = True
-   
+    elif case == "case6_1":
+        from src.models.cnn_case2v2 import HandGestureCNN_Case2
+        from src.utils.config_case2v2 import IMG_SIZE, NUM_CLASSES, DEVICE, BEST_MODEL_PATH_CASE6_1
+        model      = HandGestureCNN_Case2()
+
+        model_path = BEST_MODEL_PATH_CASE6_1
+        device     = torch.device(DEVICE)
+        class_names = ["A", "F", "L", "Y"]
+        transform  = transforms.Compose([
+            transforms.Resize((IMG_SIZE, IMG_SIZE)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
+        ])
+        use_mediapipe = True
+    elif case == "case6_2":
+        from src.models.cnn_case2v2 import HandGestureCNN_Case2
+        from src.utils.config_case2v2 import IMG_SIZE, NUM_CLASSES, DEVICE, BEST_MODEL_PATH_CASE6_2
+        model      = HandGestureCNN_Case2()
+
+        model_path = BEST_MODEL_PATH_CASE6_2
+        device     = torch.device(DEVICE)
+        class_names = ["A", "F", "L", "Y"]
+        transform  = transforms.Compose([
+            transforms.Resize((IMG_SIZE, IMG_SIZE)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
+        ])
+        use_mediapipe = True
+
 
     else:
         print(f"Unknown case '{case}'. Available: case1, case2")

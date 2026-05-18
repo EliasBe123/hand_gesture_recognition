@@ -5,7 +5,7 @@ import torch.nn as nn
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
-from src.utils.config_case2v2 import BEST_MODEL_PATH_CASE6_1, DEVICE, EPOCHS, LEARNING_RATE, FINETUNED_MODEL_PATH_CASE2, BEST_MODEL_PATH_CASE6, BEST_MODEL_PATH_CASE4
+from src.utils.config_case2v2 import BEST_MODEL_PATH_CASE6_1, DEVICE, EPOCHS, LEARNING_RATE, FINETUNED_MODEL_PATH_CASE2, BEST_MODEL_PATH_CASE6, BEST_MODEL_PATH_CASE4, BEST_MODEL_PATH_CASE6_2
 from src.data.loader_case6_blackwhite import get_dataloaders
 from src.models.cnn_case2v2 import HandGestureCNN_Case2
 
@@ -50,7 +50,8 @@ def main():
     
     # FIXME: borde använda Ellens case 4 istället
     #model.load_state_dict(torch.load(FINETUNED_MODEL_PATH_CASE2, map_location=device, weights_only=True))
-    model.load_state_dict(torch.load(BEST_MODEL_PATH_CASE4, map_location=device, weights_only=True))
+    # model.load_state_dict(torch.load(BEST_MODEL_PATH_CASE4, map_location=device, weights_only=True))
+    model.load_state_dict(torch.load(BEST_MODEL_PATH_CASE6_1, map_location=device, weights_only=True))
 
     
     criterion = nn.CrossEntropyLoss()
@@ -73,7 +74,8 @@ def main():
             best_val_acc = val_acc
             # 2. Save to the new path so original is untouched
             #torch.save(model.state_dict(), BEST_MODEL_PATH_CASE6)
-            torch.save(model.state_dict(), BEST_MODEL_PATH_CASE6_1)
+            # torch.save(model.state_dict(), BEST_MODEL_PATH_CASE6_1)
+            torch.save(model.state_dict(), BEST_MODEL_PATH_CASE6_2)
             print(f"  ✓ Saved best model (val_acc={val_acc:.4f})")
 
     print(f"\nTraining complete. Best val accuracy: {best_val_acc:.4f}")
